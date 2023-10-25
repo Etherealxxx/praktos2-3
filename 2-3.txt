@@ -1,0 +1,119 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Меню выбора программы:");
+            Console.WriteLine("1. Угадай число");
+            Console.WriteLine("2. Таблица умножения");
+            Console.WriteLine("3. Поиск делителей числа");
+            Console.WriteLine("4. Выйти");
+
+            ConsoleKeyInfo key = Console.ReadKey();
+            Console.WriteLine();
+
+            switch (key.Key)
+            {
+                case ConsoleKey.D1:
+                    GuessNumber();
+                    break;
+                case ConsoleKey.D2:
+                    MultiplicationTable();
+                    break;
+                case ConsoleKey.D3:
+                    FindDivisors();
+                    break;
+                case ConsoleKey.D4:
+                    return;
+            }
+
+            Console.WriteLine("Нажмите любую клавишу для продолжения...");
+            Console.ReadKey();
+        }
+    }
+
+    static void GuessNumber()
+    {
+        Random random = new Random();
+        int randomNum = random.Next(101); // генерируем случайное число от 0 до 100
+
+        int userInput;
+        do
+        {
+            Console.Write("Введите число: ");
+            userInput = int.Parse(Console.ReadLine());
+
+            if (userInput < randomNum)
+            {
+                Console.WriteLine("Неверно! Загаданное число больше.");
+            }
+            else if (userInput > randomNum)
+            {
+                Console.WriteLine("Неверно! Загаданное число меньше.");
+            }
+        } while (userInput != randomNum);
+
+        Console.WriteLine("Победа! Вы угадали число {0}.", randomNum);
+        Console.WriteLine("Возвращаем вас в меню выбора программы.");
+    }
+
+    static void MultiplicationTable()
+    {
+        int n = 10; // Размер таблицы
+        int[,] table = new int[n, n]; // Создание матрицы
+
+        // Заполнение матрицы значениями
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                table[i, j] = i * j; // Умножение i на j
+            }
+        }
+
+        // Вывод таблицы
+        Console.WriteLine("Таблица умножения:");
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                Console.Write("{0,4}", table[i, j]); // Вывод значения с отступом в 4 пробела
+            }
+            Console.WriteLine(); // Переход на новую строку
+        }
+
+        Console.WriteLine("Возвращаем вас в меню выбора программы.");
+    }
+
+    static void FindDivisors()
+    {
+        while (true)
+        {
+            Console.WriteLine("Введите число:");
+            int number = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Делители числа:");
+            for (int i = 1; i <= number; i++)
+            {
+                if (number % i == 0) // проверяем, является ли текущее число делителем
+                {
+                    Console.WriteLine(i);
+                }
+            }
+
+            Console.WriteLine("Хотите ввести еще число? (Да/Нет)");
+            string answer = Console.ReadLine();
+
+            if (answer.ToLower() != "да")
+            {
+                break; // если пользователь не хочет вводить еще числа, выходим из цикла
+            }
+        }
+
+        Console.WriteLine("Возвращаем вас в меню выбора программы.");
+    }
+}
